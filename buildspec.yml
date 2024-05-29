@@ -12,12 +12,10 @@ phases:
       - echo Build started on `date`
       - npm install
       - npm run build
-      - echo Build completed on `date`
   post_build:
     commands:
       - echo Nothing to do in the post-build phase
 
 artifacts:
   files:
-    - 'dist/**'  # Update this if your output directory is different
-  discard-paths: true
+    - '**/*'

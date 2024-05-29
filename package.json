@@ -1,18 +1,14 @@
 {
-  "name": "aws-elastic-beanstalk-express-js-sample",
+  "name": "your-project-name",
   "version": "1.0.0",
-  "description": "Sample Node.js (Express) app for AWS Elastic Beanstalk",
-  "main": "app.js",
   "scripts": {
-    "start": "node app.js",
-    "build": "echo \"Build script running\""
+    "build": "webpack --config webpack.config.js"  // Ensure this command produces output in the expected directory
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/aws-samples/aws-elastic-beanstalk-express-js-sample.git"
-  },
-  "license": "MIT-0",
   "dependencies": {
-    "express": "^4.17.3"
+    // Your dependencies here
+  },
+  "devDependencies": {
+    "webpack": "^5.0.0",
+    "webpack-cli": "^4.0.0"
   }
 }

@@ -20,4 +20,4 @@ phases:
 artifacts:
   files:
     - '**/*'
-  base-directory: 'dist' # This assumes your build output is in the 'dist' directory
+ 

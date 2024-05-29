@@ -9,13 +9,14 @@ phases:
       - echo Nothing to do in the pre-build phase
   build:
     commands:
-      - echo Build started on `date`
+      - echo Build started on date
       - npm install
-      - npm run build
+      - echo Build completed on date
   post_build:
     commands:
       - echo Nothing to do in the post-build phase
 
 artifacts:
   files:
-    - '**/*'
+    - '/*'
+  discard-paths: yes

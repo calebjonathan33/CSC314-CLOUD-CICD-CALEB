@@ -11,14 +11,13 @@ phases:
     commands:
       - echo Build started on `date`
       - npm install
-      - npm run build  # Ensure this matches your build command
+      - npm run build
       - echo Build completed on `date`
-      - ls -R  # List all files and directories recursively
   post_build:
     commands:
       - echo Nothing to do in the post-build phase
 
 artifacts:
   files:
-    - 'dist/**'  # Adjust this to match your build output directory
+    - 'dist/**'  # Update this if your output directory is different
   discard-paths: true

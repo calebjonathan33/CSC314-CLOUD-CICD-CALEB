@@ -10,7 +10,7 @@ app.get('/', (req, res) => {
 });
 
 app.get('/about', (req, res) => {
-    res.send('THIS IS CSC 314 CLOUD COMPUTING DEVOPS; CI-CD PIPELINE CREATED WITH AWS. THIS PAGE INDICATES SUCCESS.  JAJA PASTOR ----------------- VUG/CSC/21/5879');
+    res.send('THIS IS CSC 314 CLOUD COMPUTING DEVOPS; CI-CD PIPELINE CREATED WITH AWS. THIS PAGE INDICATES SUCCESS.  JONATHAN CALEB OKOMA ----------------- VUG/CSC/21/6082');
 });
 
 app.listen(port, () => {

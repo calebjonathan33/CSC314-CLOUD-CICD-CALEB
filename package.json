@@ -5,8 +5,7 @@
     "build": "webpack --config webpack.config.js"
   },
   "dependencies": {
-
-    
+    "express": "^4.19.2"
   },
   "devDependencies": {
     "webpack": "^5.0.0",

@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Secure Payment Gateway</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #fefdfd;
+      padding: 20px;
+      margin: 0;
+    }
+
+    .payment-form {
+      background: #e5e5e51c;
+      padding: 20px;
+      border-radius: 8px;
+      max-width: 500px;
+      width: 100%;
+    }
+
+    .payment-form h2 {
+      margin-bottom: 20px;
+      font-size: 24px;
+      color: #333;
+    }
+
+    .payment-form .form-group {
+      margin-bottom: 15px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .payment-form .form-group input {
+      padding: 10px;
+      box-sizing: border-box;
+      width: 100%;
+      font-size: 16px;
+    }
+    .check{
+      margin: auto;
+      padding: 10px;
+    }
+
+    .payment-form .error {
+      color: red;
+      font-size: 14px;
+    }
+
+    .payment-form .grid-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .payment-form button {
+      width: 100%;
+      padding: 10px;
+      background: #007bff;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .payment-form button:hover {
+      background: #68b300;
+    }
+        /* Reduce opacity and size of "Enter the 16-digit card number on the card" */
+        .payment-form p {
+      opacity: 0.5;
+      font-size: 12px;
+      margin-top: 0; /* Remove margin-top to reduce space */
+        }
+
+    /* Reduced opacity for the terms agreement text */
+    .payment-form .terms-agreement {
+      margin-bottom: 15px;
+      font-size: 14px;
+      line-height: 1.5;
+      opacity: 2;
+    }
+
+    .payment-form .terms-agreement p {
+      margin: 0; /* Remove margin to eliminate bullet points */
+    }
+  </style>
+</head>
+<body>
+  <form class="payment-form" id="paymentForm">
+    <h2>NACOS DUES</h2>
+    <div class="form-group">
+      <input type="number" id="cardNumber" placeholder="Card Number" maxlength="16" required>
+      <p>Enter the 16-digit card number on the card</p>
+      <div class="error" id="cardNumberError"></div>
+    </div>
+    <div class="grid-container">
+      <div class="form-group">
+        <input type="date" id="expirationDate" placeholder="DD/MM/YY" required>
+        <div class="error" id="expiryDateError"></div>
+      </div>
+      <div class="form-group">
+        <input type="number" id="CVV" placeholder="CVV" maxlength="3" required>
+        <div class="error" id="cvcError"></div>
+      </div>
+    </div>
+    <div class="form-group">
+      <input type="text" id="Nameoncard" placeholder="Name on card" required>
+      <div class="error" id="billingNameError"></div>
+    </div>
+
+    <div class="terms-agreement">
+      <p>By proceeding with this payment, you confirm that:</p>
+      <p style="padding: 0px 20px;">You have reviewed and understood the billing amount and charges.</p>
+      <p style="padding: 0px 20px;">You are authorized to use the payment method you are providing.</p>
+      <p style="padding: 0px 20px;">You agree to the university's payment <a href="">terms and conditions.</a> </p>
+    </div>
+
+    <div class="check">
+    <input type="checkbox" id="terms" name="terms" value="terms">
+  <label for="terms"> I agree</label><br>
+    </div>
+
+    <button type="submit">Pay ₦5000</button>
+  </form>
+
+  <script>
+    document.getElementById('paymentForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+      validateForm();
+    });
+
+    function validateForm() {
+      const cardNumber = document.getElementById('cardNumber').value;
+      const expiryDate = document.getElementById('expirationDate').value;
+      const cvc = document.getElementById('CVV').value;
+      const billingName = document.getElementById('Nameoncard').value;
+
+      let isValid = true;
+
+      // Validate card number
+      if (!validateCardNumber(cardNumber)) {
+        document.getElementById('cardNumberError').textContent = 'Invalid card number';
+        isValid = false;
+      } else {
+        document.getElementById('cardNumberError').textContent = '';
+      }
+
+      // Validate expiry date
+      if (!expiryDate) {
+        document.getElementById('expiryDateError').textContent = 'Please select an expiry date';
+        isValid = false;
+      } else {
+        document.getElementById('expiryDateError').textContent = '';
+      }
+
+      // Validate CVC
+      if (!/^\d{3}$/.test(cvc)) {
+        document.getElementById('cvcError').textContent = 'CVC must be 3 digits';
+        isValid = false;
+      } else {
+        document.getElementById('cvcError').textContent = '';
+      }
+
+      // Validate billing name
+      if (!billingName.trim()) {
+        document.getElementById('billingNameError').textContent = 'Please enter your billing name';
+        isValid = false;
+      } else {
+        document.getElementById('billingNameError').textContent = '';
+      }
+
+      // Validate terms and conditions agreement
+      if (!document.getElementById('terms').checked) {
+        alert('You must agree to the terms and conditions to continue');
+        isValid = false;
+      }
+
+      if (isValid) {
+        alert('Payment information is valid');
+        // Process payment here
+        // ... (your payment processing logic)
+      }
+    }
+
+    function validateCardNumber(cardNumber) {
+      // Use the Luhn algorithm to validate the card number
+      let sum = 0;
+      let shouldDouble = false;
+      for (let i = cardNumber.length - 1; i >= 0; i--) {
+        let digit = parseInt(cardNumber[i]);
+
+        if (shouldDouble) {
+          digit *= 2;
+          if (digit > 9) {
+            digit -= 9;
+          }
+        }
+
+        sum += digit;
+        shouldDouble = !shouldDouble;
+      }
+
+      return sum % 10 === 0;
+    }
+
+    document.querySelectorAll('.form-group input').forEach(input => {
+      input.addEventListener('focus', function() {
+        this.setAttribute('placeholder', '');
+      });
+
+      input.addEventListener('blur', function() {
+        switch (this.id) {
+          case 'cardNumber':
+            this.setAttribute('placeholder', 'Card Number');
+            break;
+          case 'expirationDate':
+            this.setAttribute('placeholder', 'DD/MM/YY');
+            break;
+          case 'CVV':
+            this.setAttribute('placeholder', 'CVC');
+            break;
+          case 'Nameoncard':
+            this.setAttribute('placeholder', 'Name on card');
+            break;
+        }
+      });
+    });
+  </script>
+</body>
+</html>
